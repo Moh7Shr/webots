@@ -216,6 +216,7 @@ export default class WbViewpoint extends WbBaseNode {
   }
 
   updatePosition() {
+    console.log("Going here");
     if (this.wrenObjectsCreatedCalled)
       this._applyPositionToWren();
 
