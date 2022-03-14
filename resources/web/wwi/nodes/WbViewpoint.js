@@ -167,8 +167,9 @@ export default class WbViewpoint extends WbBaseNode {
       this._viewpointLastUpdate = time;
       let deltaPosition;
 
-      if (typeof this._followedObjectDeltaPosition !== 'undefined')
+      if (typeof this._followedObjectDeltaPosition !== 'undefined') {
         this._viewpointForce = this._viewpointForce.add(this._followedObjectDeltaPosition);
+      }
 
       if (forcePosition || mass === 0 || (timeInterval > 0.1 && typeof webots.animation === 'undefined')) {
         deltaPosition = new WbVector3(this._viewpointForce.x, this._viewpointForce.y, this._viewpointForce.z);
@@ -204,6 +205,7 @@ export default class WbViewpoint extends WbBaseNode {
   }
 
   setFollowedObjectDeltaPosition(newPosition, previousPosition) {
+    this._followedObjectPosition = previousPosition;
     this._followedObjectDeltaPosition = newPosition.sub(previousPosition);
   }
 
@@ -216,7 +218,7 @@ export default class WbViewpoint extends WbBaseNode {
   }
 
   updatePosition() {
-    console.log("Updating Position");
+    //console.log(this.position);
     if (this.wrenObjectsCreatedCalled)
       this._applyPositionToWren();
 
