@@ -50,15 +50,15 @@ export default class Toolbar {
   }
 
   createStreamingToolbar() {
-    this.toolbar.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+    this.toolbar.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
 
     // Left part
     this._createQuitButton();
     this._createReloadButton();
     this._createStreamingTimeIndicator();
     this._createResetButton();
-    this._createStepButton();
     this._createPlayButton();
+    this._createStepButton();
     this._createRunButton();
     this._createWorldSelection();
     if (this._view.broadcast) {
@@ -205,6 +205,44 @@ export default class Toolbar {
         this.realTime();
     }
 
+    this.playButton = document.createElement('button');
+    this.playButton.id = 'play-button';
+    this.playButton.className = 'toolbar-left-btn';
+
+    this.playButton.onclick = () => {this._triggerPlayPauseButton()};
+
+    this.playButtonElement = document.createElement('div');
+    this.playButtonElement.id = 'icon-play';
+    this.playButtonElement.className = 'icon-play';
+    this.playButton.appendChild(this.playButtonElement);
+
+    this.playTooltip = document.createElement('span');
+    this.playTooltip.className = 'tooltip ' + 'play-tooltip';
+    this.playTooltip.id = 'playTooltip';
+    this.playTooltip.innerHTML = 'play (k)';
+    this.playButton.appendChild(this.playTooltip);
+
+    if (action === 'pause') {
+      this.playButtonElement.className = 'icon-pause';
+      this.playTooltip.innerHTML = 'Pause (k)';
+    }
+
+    this.toolbarLeft.appendChild(this.playButton);
+    document.addEventListener('keydown', this.keydownRefK = _ => this._playKeyboardHandler(_));
+    if (!(typeof this.parentNode.showPlay === 'undefined' || this.parentNode.showPlay))
+      this.playButton.style.display = 'none';
+  }
+
+  _createPlayButtonTemp() {
+    let action;
+    if (this.type === 'animation')
+      action = (this._view.animation.gui === 'real-time') ? 'pause' : 'play';
+    else if (this.type === 'streaming') {
+      action = (this._view.currentState === 'real-time') ? 'pause' : 'play';
+      if (action === 'pause')
+        this.realTime();
+    }
+
     this.playButton = this._createToolBarButton('play', 'Play (k)', () => this._triggerPlayPauseButton());
     this.playTooltip = this.playButton.childNodes[0];
 
@@ -218,7 +256,7 @@ export default class Toolbar {
     if (!(typeof this.parentNode.showPlay === 'undefined' || this.parentNode.showPlay))
       this.playButton.style.display = 'none';
 
-    this.minWidth +=41
+    this.minWidth += 41;
   }
 
   _triggerPlayPauseButton() {
@@ -249,7 +287,7 @@ export default class Toolbar {
     }
 
     this.playTooltip.innerHTML = 'P' + action.substring(1) + ' (k)';
-    this.playButton.className = 'toolbar-btn icon-' + action;
+    this.playButtonElement.className = 'icon-' + action;
   }
 
   _playKeyboardHandler(e) {
@@ -1107,7 +1145,7 @@ export default class Toolbar {
 
     if (typeof this.playButton !== 'undefined') {
       this.playTooltip.innerHTML = 'Play (k)';
-      this.playButton.className = 'toolbar-btn icon-play';
+      this.playButtonElement.className = 'icon-play';
     }
 
     if (typeof this.runButton !== 'undefined') {
@@ -1148,11 +1186,11 @@ export default class Toolbar {
     }
     if (typeof this.playButton !== 'undefined') {
       this.playTooltip.innerHTML = 'Play (k)';
-      this.playButton.className = 'toolbar-btn icon-play';
+      this.playButtonElement.className = 'icon-play';
     }
 
     this.runTooltip.innerHTML = action.charAt(0).toUpperCase() + action.slice(1);
-    this.runButton.className = 'toolbar-btn icon-' + action;
+    this.runButton.className = action + '-button';
   }
 
   run() {
