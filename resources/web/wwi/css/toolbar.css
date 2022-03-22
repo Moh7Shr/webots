@@ -59,7 +59,7 @@ webots-view .toolbar-right {
   position: absolute;
   bottom: 0px;
   height: 40px;
-  right: 1%;
+  right: 1.5%;
 }
 
 webots-view .webots-streaming-time {
@@ -83,18 +83,36 @@ webots-view .toolbar-btn {
   width: 36px;
   height: 36px;
   box-sizing: border-box;
-  margin: 0 1px;
+  margin: 2px 6px;
   border:none;
   box-shadow: none;
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
   border: 2px solid transparent;
-  background-color: magenta;
+  background-color: transparent;
   background-repeat: no-repeat;
-
   cursor: pointer;
   outline: none;
+}
+
+webots-view .toolbar-left-btn {
+  float: left;
+  height: 36px;
+  width: 36px;
+  box-sizing: border-box;
+  border:none;
+  box-shadow: none;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid transparent;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  outline:none;
+  padding-top: 9px;
+  transition: all 0.2s ease-in-out;
 }
 
 webots-view .icon-play {
@@ -117,16 +135,16 @@ webots-view .icon-pause {
   clip-path: polygon(0 0, 40% 0, 40% 100%, 60% 100%, 60% 0%, 100% 0, 100% 100%, 0 100%);
 }
 
-webots-view .icon-step         {background-image: url(../images/icons/step.svg); padding: 5px;}
-webots-view .icon-run          {background-image: url(../images/icons/step.svg); padding: 5px;}
-webots-view .icon-reset        {background-image: url(../images/icons/reset.svg); padding: 5px;}
-webots-view .icon-reload       {background-image: url(../images/icons/reload.svg); padding: 5px;}
-webots-view .icon-quit         {background-image: url(../images/icons/quit.svg); padding: 5px;}
-webots-view .icon-info         {background-image: url(../images/icons/information.svg); padding: 5px;}
-webots-view .icon-settings     {background-image: url(../images/icons/settings.svg); padding: 5px;}
-webots-view .icon-fullscreen   {background-image: url(../images/icons/fullscreen.svg); padding: 5px;}
-webots-view .icon-partscreen   {background-image: url(../images/icons/exitfullscreen.svg); padding: 5px;}
-webots-view .icon-robot-window {background-image: url(../images/icons/robotwindow.svg); padding: 5px;}
+webots-view .icon-step         {background-image: url(../images/icons/step.svg); border-top: 8px solid transparent; border-right: 12px solid transparent;}
+webots-view .icon-run          {background-image: url(../images/icons/step.svg); border-top: 8px solid transparent; border-right: 12px solid transparent;}
+webots-view .icon-reset        {background-image: url(../images/icons/reset.svg); border-top: 8px solid transparent; border-left: 12px solid transparent;}
+webots-view .icon-reload       {background-image: url(../images/icons/reload.svg); border: 2px solid transparent;}
+webots-view .icon-quit         {background-image: url(../images/icons/quit.svg); border: 2px solid transparent;}
+webots-view .icon-info         {background-image: url(../images/icons/information.svg); border: 2px solid transparent;}
+webots-view .icon-settings     {background-image: url(../images/icons/settings.svg); border: 2px solid transparent;}
+webots-view .icon-fullscreen   {background-image: url(../images/icons/fullscreen.svg); border: 2px solid transparent;}
+webots-view .icon-partscreen   {background-image: url(../images/icons/exitfullscreen.svg); border: 2px solid transparent;}
+webots-view .icon-robot-window {background-image: url(../images/icons/robotwindow.svg); border: 2px solid transparent;}
 
 /* Tooltips */
 
@@ -145,10 +163,14 @@ webots-view .tooltip {
 
   /* Position the tooltip */
   position: relative;
-  bottom: 55px;
+  bottom: 50px;
 }
 
 webots-view .toolbar-btn:hover .tooltip {
+  visibility: visible;
+}
+
+webots-view .toolbar-left-btn:hover .tooltip {
   visibility: visible;
 }
 
@@ -160,13 +182,19 @@ webots-view .reload-tooltip{
 
 webots-view .robot-window-tooltip {
   position: absolute;
-  right: 0px;
+  right: 100px;
   white-space: nowrap;
 }
 
 webots-view .info-tooltip {
   position: absolute;
-  right: 0px;
+  right: 42px;
+  white-space: nowrap;
+}
+
+webots-view .settings-tooltip {
+  position: absolute;
+  right: 37px;
   white-space: nowrap;
 }
 
@@ -187,6 +215,30 @@ webots-view .partscreen-tooltip {
   right: 0px;
 }
 
+webots-view .quit-tooltip {
+  white-space: nowrap;
+  position: absolute;
+  left: 0px;
+}
+
+webots-view .reset-tooltip {
+  white-space: nowrap;
+  position: absolute;
+  left: 120px;
+}
+
+webots-view .play-tooltip {
+  white-space: nowrap;
+  position: absolute;
+  left: 195px;
+}
+
+webots-view .step-tooltip {
+  white-space: nowrap;
+  position: absolute;
+  left: 170px;
+}
+
 /* Time Indicator */
 
 webots-view .current-time, .total-time, .time-divider {
@@ -195,7 +247,7 @@ webots-view .current-time, .total-time, .time-divider {
   color: rgba(240, 240, 240, 1);
   font-family: 'verdana';
   font-size: 14px;
-  text-shadow: 1px 1px 1px rgb(0,0,0);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0);
   user-select: none;
   -webkit-user-select: none;
 }
@@ -215,9 +267,9 @@ webots-view #worldSelectionDiv {
 webots-view .select-css {
   position: relative;
   align-self: center;
-  padding: 0.4em 1.8em 0.3em 0.4em;
-  border: 1px solid rgb(170, 170, 170);
-  border-radius: 0.5em;
+  padding: 0.5em 1.8em 0.3em 0.5em;
+  border: 1px solid transparent;
+  border-radius: 0.3em;
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
   background-repeat: no-repeat, repeat;
   background-position: right .7em top 55%, 0 0;
@@ -227,7 +279,7 @@ webots-view .select-css {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  font-family: Arial,Helvetica,sans-serif;
+  font-family: Tahoma;
   top: 3px;
   cursor: pointer;
 
@@ -239,10 +291,9 @@ webots-view .select-css::-ms-expand {
 /* Hide dashed box when on focus in Firefox browsers */
 webots-view .select-css:-moz-focusring {
   color: transparent;
-  text-shadow: 0 0 0 #000;
 }
 /* Set options to normal weight */
-webots-view .select-css option {
+webots-view .select-css option:hover {
   font-weight:normal;
 }
 
@@ -310,7 +361,7 @@ webots-view .information-panel .info-tabs-bar .info-tab {
 }
 
 webots-view .information-panel .info-tabs-bar .info-tab:hover {
-  border-bottom: 1px solid red;
+  border-bottom: 2px solid red;
 }
 
 webots-view .information-panel .info-tabs-bar .tab0 {
@@ -436,10 +487,10 @@ webots-view .arrow-left{
 webots-view .switch {
   position: absolute;
   display: inline-block;
-  width: 40px;
-  height: 17px;
-  top: 10px;
-  right: 11px;
+  width: 28px;
+  height: 14px;
+  top: 9px;
+  right: 12px;
   pointer-events: none;
 }
 
@@ -457,19 +508,21 @@ webots-view .slider {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #aaa;
   pointer-events: none;
+  transition: background-color 0.2s ease-in-out;
 }
 
 webots-view .slider:before {
   position: absolute;
   content: "";
-  height: 21px;
-  width: 21px;
-  left: -3px;
-  top: -2px;
-  background-color: #ccc;
+  height: 16px;
+  width: 16px;
+  left: -2px;
+  top: -1px;
+  background-color: #fff;
   pointer-events: none;
+  transition: transform 0.1s ease-in-out;
 }
 
 webots-view input:checked + .slider {
@@ -483,15 +536,15 @@ webots-view input:focus + .slider {
 }
 
 webots-view input:checked + .slider:before {
-  -webkit-transform: translateX(23px);
-  -ms-transform: translateX(23px);
-  transform: translateX(23px);
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
   background-color: white;
   pointer-events: none;
 }
 
 webots-view .slider.round {
-  border-radius: 17px;
+  border-radius: 14px;
   pointer-events: none;
 }
 
@@ -639,47 +692,6 @@ webots-view .unclickable {
 }
 
 /* Experimental */
-
-webots-view .toolbar-left-btn {
-  float: left;
-  height: 36px;
-  width: 36px;
-  box-sizing: border-box;
-  border:none;
-  box-shadow: none;
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  background-color: transparent;
-  cursor: pointer;
-  outline:none;
-  padding-top: 9px;
-  transition: all 0.2s ease-in-out;
-}
-
-webots-view .toolbar-left-btn:hover .tooltip {
-  visibility: visible;
-}
-
-webots-view .icon-play {
-  margin-left: 4px;
-  width: 20px;
-  height: 20px;
-  background: #f0f0f0;
-  transition: inherit;
-  pointer-events: none;
-  clip-path: polygon(0 0, 50% 25%, 50% 75%, 50% 75%, 50% 25%, 100% 50%, 100% 50%, 0 100%);
-}
-
-webots-view .icon-pause {
-  margin-left: 4px;
-  width: 18px;
-  height: 20px;
-  background: #f0f0f0;
-  transition: inherit;
-  pointer-events: none;
-  clip-path: polygon(0 0, 40% 0, 40% 100%, 60% 100%, 60% 0%, 100% 0, 100% 100%, 0 100%);
-}
 
 /*
 webots-view .icon-step {
